@@ -30,11 +30,14 @@ import android.graphics.pdf.PdfDocument.PageInfo
 import android.os.Environment
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
+import com.itextpdf.text.PageSize
+import com.itextpdf.text.Rectangle
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -77,27 +80,32 @@ class MainActivity : AppCompatActivity() {
 //        val bitmapUri = Uri.parse(bitmapPath)
 //        shareImageUri(bitmapUri)
 
-
         val bitmap = getBitmapFromView(cc)
-
-        //Now create the name of your PDF file that you will generate
-        val  pdfFile = File(filesDir, "dd.pdf")
+        var  pdfFile = File(Environment.getExternalStorageDirectory(), "Documents/")
         val  document= Document()
+        var isPresent = true
+        if (!pdfFile.exists()) {
+            isPresent = pdfFile.mkdir();
+        }
+
+        if (isPresent) {
+            pdfFile = File(pdfFile.absolutePath, "${Date()}.pdf")
+        } else {
+            Toast.makeText(this, "Nao pode criar diretorio", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         PdfWriter.getInstance(document, FileOutputStream(pdfFile.absolutePath)) //  Change pdf's name.
         document.open()
         val stream = ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val img = Image.getInstance(stream.toByteArray()) // Change image's name and extension.
-
-        val scaler = ((document.pageSize.width - document.leftMargin() - document.rightMargin() - 0) / img.width) * 100
-
-        img.scalePercent(scaler)
+        img.scaleToFit(PageSize.A4.width, PageSize.A4.height - document.bottomMargin() - document.topMargin())
         img.alignment = Image.ALIGN_CENTER
-        img.setDpi(bitmap.width, bitmap.height)
-
         document.add(img)
         document.close()
+
+        Toast.makeText(this, "Salvo", Toast.LENGTH_SHORT).show()
 
     }
 
