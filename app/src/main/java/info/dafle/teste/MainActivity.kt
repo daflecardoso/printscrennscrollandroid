@@ -30,6 +30,7 @@ import android.graphics.pdf.PdfDocument.PageInfo
 import android.os.Environment
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
+import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -81,7 +82,19 @@ class MainActivity : AppCompatActivity() {
         val bitmap = getBitmapFromView(cc)
 
         //Now create the name of your PDF file that you will generate
-        val  pdfFile = File(filesDir, "dd.pdf")
+       // val  pdfFile = File(getExternalFilesDir("Documents"), "/dd.pdf")
+
+
+        val pdfFile = File.createTempFile(
+                "chupika",
+                ".pdf",
+                getExternalFilesDir("Documents")
+        )
+
+        if (!pdfFile.exists()) {
+            pdfFile.mkdir()
+        }
+
         val  document= Document()
 
         PdfWriter.getInstance(document, FileOutputStream(pdfFile.absolutePath)) //  Change pdf's name.
@@ -90,15 +103,18 @@ class MainActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val img = Image.getInstance(stream.toByteArray()) // Change image's name and extension.
 
-        val scaler = ((document.pageSize.width - document.leftMargin() - document.rightMargin() - 0) / img.width) * 100
+        val scaler = ((document.pageSize.width - document.leftMargin() - document.rightMargin() - 0) / img.width) * 32
+        //img.scaleToFit(bitmap.width.toFloat(), bitmap.height.toFloat())
+
 
         img.scalePercent(scaler)
         img.alignment = Image.ALIGN_CENTER
-        img.setDpi(bitmap.width, bitmap.height)
 
         document.add(img)
         document.close()
 
+
+        Toast.makeText(this, "pdf salvo", Toast.LENGTH_SHORT).show()
     }
 
     fun getBitmapFromView(view: View): Bitmap {
