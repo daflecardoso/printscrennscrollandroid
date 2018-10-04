@@ -31,7 +31,16 @@ import android.os.Environment
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
 import com.itextpdf.text.PageSize
+import com.itextpdf.text.pdf.PdfWriter
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+
+<<<<<<< HEAD
 import com.itextpdf.text.Rectangle
+=======
+>>>>>>> 327cc2b481af784fa507cde9aee1e08fd0a56cfe
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -108,6 +117,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Salvo", Toast.LENGTH_SHORT).show()
 
     }
+
 
     fun getBitmapFromView(view: View): Bitmap {
         //Define a bitmap with the same size as the view
