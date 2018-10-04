@@ -9,24 +9,14 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
-import android.Manifest.permission
-import android.webkit.PermissionRequest
 import com.karumi.dexter.Dexter
 import android.content.Intent
 import android.net.Uri
-import android.R.attr.bitmap
 import android.app.Activity
 import android.graphics.Canvas
 import android.graphics.Color
-import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
-import android.R.attr.bitmap
-import android.graphics.Paint
-import android.graphics.pdf.PdfDocument
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
-import android.graphics.pdf.PdfDocument.PageInfo
 import android.os.Environment
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
@@ -35,17 +25,6 @@ import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.util.*
-
-<<<<<<< HEAD
-import com.itextpdf.text.Rectangle
-=======
->>>>>>> 327cc2b481af784fa507cde9aee1e08fd0a56cfe
-import com.itextpdf.text.pdf.PdfWriter
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.util.*
 
 
